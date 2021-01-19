@@ -22,25 +22,21 @@ while (True):
 ClustersL=[Clusters[c] for c in sorted(Clusters)]
 Assigned=[]
 
+print(ClustersL)
 while (len(ClustersL)>=2):
-    tmp=ClustersL
-    Remove=[]
-    cl1=tmp[0]
-    cl2=tmp[1]
+    cl1=ClustersL[0]
+    cl2=ClustersL[1]
     if len(cl1)<=len(cl2):
         for a in cl1:
             b=cl2.pop(0)
             Assigned.append((a,b))
-        Remove.append(0)
+        del ClustersL[0]
     elif len(cl1)>=len(cl1):
         for a in cl2:
             b=cl1.pop(0)
             Assigned.append((a,b))
-        Remove.append(1)
-    for x in Remove:
-        del tmp[x]
-    ClustersL=tmp
-
+        del ClustersL[1]
+    
 tried={}
 if len(ClustersL[0]) % 2 !=0:
        ClustersL[0].append('none')
