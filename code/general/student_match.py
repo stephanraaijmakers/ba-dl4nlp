@@ -1,7 +1,6 @@
 import sys
-import re
 import random
-import collections
+
 
 # Python3
 
@@ -10,7 +9,7 @@ Clusters={}
 
 while (True):
     name=input("What is your name? ")
-    if name=="stop":
+    if name=="###":
         break
     skill=int(input("What is your Python skill level? (1-5) "))
     Skills[name]=skill
@@ -22,7 +21,8 @@ while (True):
 ClustersL=[Clusters[c] for c in sorted(Clusters)]
 Assigned=[]
 
-print(ClustersL)
+#print(ClustersL)
+
 while (len(ClustersL)>=2):
     cl1=ClustersL[0]
     cl2=ClustersL[1]
@@ -50,8 +50,13 @@ for x in ClustersL[0]:
         tried[x]=1
         tried[y]=1
 
+f=open("student-pairs.txt","w")
+for (a,b) in Assigned:
+    print("%s is linked to %s"%(a,b))
+    f.write("%s is linked to %s\n"%(a,b))
+f.close()
+print("See student-pairs.txt")
 
-print(Assigned)
 exit(0)
         
 
