@@ -4,6 +4,7 @@ from glob import glob
 
 def main(files):
     files=glob(files)
+    print("label,news_item")
     for f in files:
         m=re.match("^([^\/]+)\/.+",f)
         if m:
