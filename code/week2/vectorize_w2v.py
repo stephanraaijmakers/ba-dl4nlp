@@ -51,7 +51,7 @@ def word2vec_transformer(texts, w2v_model, dimension=100):
 # Download existing (small) model and use that (model has 25-dimensional vectors)
 model = gensim.downloader.load('glove-twitter-25')
     
-df=pd.read_csv("bbc-all.csv",encoding= 'unicode_escape')
+df=pd.read_csv("bbc-all.csv",encoding= 'unicode_escape') # try encoding = 'utf-8'; encoding = 'ISO-8859-1' for unicode errors
 X=df['news_item']
 y=df['label']
 
