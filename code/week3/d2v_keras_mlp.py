@@ -3,13 +3,10 @@ import gensim.models
 import pandas as pd
 import sys
 from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.linear_model import Perceptron
 import numpy as np
-import gensim.downloader
 
-from gensim.test.utils import common_texts
+#import gensim.downloader
+#from gensim.test.utils import common_texts
 
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 
@@ -80,7 +77,7 @@ def build_d2v_model(dimension):
     return (documents, model)
     
 
-def test_d2v_model(documents,str):
+def test_d2v_model(model, documents, str):
         tokens = str.split()
         sims = model.docvecs.most_similar(positive=[model.infer_vector(tokens)],topn=100)
         for (doc_id, value) in sims:
