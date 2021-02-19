@@ -18,12 +18,14 @@ from sklearn.preprocessing import LabelBinarizer
 
 
 def scale_data(X_train, X_test):
-        min=np.min(np.array(X_train+X_test))
-        max=np.max(np.array(X_train+X_test))
+        min=np.min(np.concatenate((X_train,X_test)))
+        max=np.max(np.concatenate((X_train,X_test)))
         X_train=(X_train-min)/(max-min)
         X_test=(X_test-min)/(max-min)
         return X_train, X_test
-        
+
+
+
 
 def create_keras_model(X_train, y_train):
         input_dim = X_train.shape[1]
