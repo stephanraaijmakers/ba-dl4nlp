@@ -15,7 +15,7 @@ class MyCorpus:
         """An iterator that yields sentences (lists of str)."""
         def __iter__(self):
             corpus_path = './bbc.lines'
-            for line in open(corpus_path):
+            for line in open(corpus_path,"rb"):
                 # assume there's one document per line, tokens separated by whitespace
                 yield utils.simple_preprocess(line)
 
@@ -43,13 +43,13 @@ def word2vec_transformer(texts, w2v_model, dimension=100):
 
 # Option 1: build own model on BBC data
 # --------------------------------------
-#  model=build_w2v_model()
+model=build_w2v_model()
 
 
 # Option 2:
 # ---------------------------------------------
 # Download existing (small) model and use that (model has 25-dimensional vectors)
-model = gensim.downloader.load('glove-twitter-25')
+#model = gensim.downloader.load('glove-twitter-25')
     
 df=pd.read_csv("bbc-all.csv",encoding= 'unicode_escape') # try encoding = 'utf-8'; encoding = 'ISO-8859-1' for unicode errors
 X=df['news_item']
@@ -68,7 +68,7 @@ X_test_vectors = tfidf_transformer.transform(X_test_counts)
 
     
 # Word2vec: choose a model option (see above)
-dimension=25
+dimension=100 #25  SET THIS TO 100 for OWN w2v model; set to 25 for Twitter W2V!
 X_train_vectors=word2vec_transformer(X_train,model,dimension)
 X_test_vectors=word2vec_transformer(X_test,model,dimension)
 
