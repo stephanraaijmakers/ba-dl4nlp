@@ -1,21 +1,13 @@
-from gensim import utils
-import gensim.models
 import pandas as pd
 import sys
 from sklearn.model_selection import train_test_split
 import numpy as np
-
-#import gensim.downloader
-#from gensim.test.utils import common_texts
-
-from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Activation, Dropout, Conv1D, MaxPooling1D, Flatten, Embedding
 
 from tensorflow.keras.preprocessing.text import one_hot,Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-
 
 import tensorflow as tf
 from sklearn.preprocessing import LabelBinarizer
@@ -67,7 +59,6 @@ def embed_documents(texts):
 
 # Delete if  __name__ etc. when working in Colab
 if __name__=="__main__":
-   dimension=25
    df=pd.read_csv("bbc-all.csv",encoding= 'ISO-8859-1') # try encoding = 'utf-8'; encoding = 'ISO-8859-1' for unicode errors
    X=df['news_item']
    y=df['label']
