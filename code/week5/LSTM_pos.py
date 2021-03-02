@@ -44,10 +44,16 @@ for line in pos_tagged_text:
 words = sorted(Words)
 tags=sorted(Tags)
 vocab_len=len(Words)
-word_to_int = dict((w, i) for i, w in enumerate(words))
-int_to_word = dict((i, w) for i, w in enumerate(words))
-tag_to_int = dict((t, i) for i, t in enumerate(tags))
-int_to_tag = dict((i, t) for i, t in enumerate(tags))
+
+word_to_int = dict((w, i+1) for i, w in enumerate(words))
+word_to_int['*']=0 # padding
+int_to_word = dict((i+1, w) for i, w in enumerate(words))
+int_to_word[0]='*' # padding
+
+tag_to_int = dict((t, i+1) for i, t in enumerate(tags))
+tag_to_int['*']=0 # padding 
+int_to_tag = dict((i+1, t) for i, t in enumerate(tags))
+int_to_tag[0]='*' # padding
 
 
 X=[]
@@ -74,7 +80,7 @@ model = Sequential()
 model.add(InputLayer(input_shape=(maxlen, )))
 model.add(Embedding(vocab_len, 128))
 model.add(Bidirectional(LSTM(256, return_sequences=True)))
-model.add(TimeDistributed(Dense(len(Tags))))
+model.add(TimeDistributed(Dense(len(Tags)+1)))
 model.add(Activation('softmax'))
 
 model.compile(loss='categorical_crossentropy',
