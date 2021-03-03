@@ -43,7 +43,7 @@ for line in pos_tagged_text:
 
 words = sorted(Words)
 tags=sorted(Tags)
-vocab_len=len(Words)
+vocab_len=len(Words)+1
 
 word_to_int = dict((w, i+1) for i, w in enumerate(words))
 word_to_int['*']=0 # padding
@@ -92,6 +92,6 @@ model.summary()
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
 
-model.fit(X_train,to_categorical(y_train),epochs=10,batch_size=64)
-model.evaluate(X_test,y_test)
+model.fit(X_train,to_categorical(y_train),epochs=1,batch_size=64)
+model.evaluate(X_test,to_categorical(y_test))
 
