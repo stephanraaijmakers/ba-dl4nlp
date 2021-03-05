@@ -25,10 +25,14 @@ n_sentences=0
 
 maxlen=0
 
+filtered_len=20
+
 for line in pos_tagged_text:
 	n_sentences+=1
 	words=line.rstrip().lower().split(" ")
 	l=len(words)
+	if len(words)>filtered_len:
+		continue
 	if l>maxlen:
 		maxlen=l
 	n_words+=l
@@ -46,14 +50,14 @@ tags=sorted(Tags)
 vocab_len=len(Words)+1
 
 word_to_int = dict((w, i+1) for i, w in enumerate(words))
-word_to_int['*']=0 # padding
+word_to_int[0]=0 # padding
 int_to_word = dict((i+1, w) for i, w in enumerate(words))
-int_to_word[0]='*' # padding
+int_to_word[0]=0 # padding
 
 tag_to_int = dict((t, i+1) for i, t in enumerate(tags))
-tag_to_int['*']=0 # padding 
+tag_to_int[0]=0 # padding 
 int_to_tag = dict((i+1, t) for i, t in enumerate(tags))
-int_to_tag[0]='*' # padding
+int_to_tag[0]=0 # padding
 
 
 X=[]
@@ -62,6 +66,8 @@ for line in pos_tagged_text:
 	sent=[]
 	tags=[]
 	words=line.rstrip().lower().split(" ")
+	if len(words)>filtered_len:
+		continue
 	for word in words:
 		m=re.match("^([^\_]+)\_(.+)",word)
 		if m:
@@ -73,11 +79,11 @@ for line in pos_tagged_text:
 	y.append(tags)
 	
 
+maxlen=filtered_len
+
 X = pad_sequences(X, maxlen=maxlen, padding='post')
 y = pad_sequences(y, maxlen=maxlen, padding='post')
 
-#X = pad_sequences(X, maxlen=maxlen, padding='post','value='*')
-#y = pad_sequences(y, maxlen=maxlen, padding='post', value='*')
  
 model = Sequential()
 model.add(InputLayer(input_shape=(maxlen, )))
@@ -99,5 +105,19 @@ model.summary()
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
 
 model.fit(X_train,to_categorical(y_train),epochs=1,batch_size=64)
+
 model.evaluate(X_test,to_categorical(y_test))
 
+predictions=model.predict(X_test)
+
+n=0
+for sentence in X_test:
+	sentence_prediction=predictions[n]
+	n+=1
+	m=0
+	for int_word in sentence:
+		best_tag=int_to_tag[np.argmax(sentence_prediction[m],axis=0)]
+		m+=1
+		print("%s_%s"%(int_to_word[int_word],best_tag),end=" ")
+	print()
+	      
