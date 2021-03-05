@@ -11,7 +11,7 @@ from tensorflow.keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-
+from tensorflow.keras.utils import plot_model
 
 filename = sys.argv[1]
 
@@ -75,6 +75,9 @@ for line in pos_tagged_text:
 
 X = pad_sequences(X, maxlen=maxlen, padding='post')
 y = pad_sequences(y, maxlen=maxlen, padding='post')
+
+#X = pad_sequences(X, maxlen=maxlen, padding='post','value='*')
+#y = pad_sequences(y, maxlen=maxlen, padding='post', value='*')
  
 model = Sequential()
 model.add(InputLayer(input_shape=(maxlen, )))
@@ -88,6 +91,9 @@ model.compile(loss='categorical_crossentropy',
 			    metrics=['accuracy'])
 
 model.summary()
+
+
+#plot_model(model, to_file='LSTM_pos_model.png')
 
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
