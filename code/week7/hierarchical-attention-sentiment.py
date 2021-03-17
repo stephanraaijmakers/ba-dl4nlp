@@ -171,7 +171,7 @@ model.compile(loss='categorical_crossentropy',
 sentence_encoder.summary()
 model.summary()
 
-#plot_model(model, to_file='hierarchical_attention_sentence_encoder.png')
+#plot_model(sentence_encoder, to_file='hierarchical_attention_sentence_encoder.png')
 #plot_model(model, to_file='hierarchical_attention_model.png')
 
 
