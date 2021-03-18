@@ -128,20 +128,14 @@ for i, sentences in enumerate(reviews):
 
 
 labels=to_categorical(np.asarray(labels))                                
-print(labels)
 indices = np.arange(data.shape[0])
 np.random.shuffle(indices)
 data = data[indices]
 labels = labels[indices]
 y=labels
 
-#data=data[:100]
-#y=y[:100]
-
 validation_split=0.1
 nb_validation_samples = int(validation_split * data.shape[0])
-
-
 X_train = data[:-nb_validation_samples]
 y_train = y[:-nb_validation_samples]
 X_test=data[nb_validation_samples:]
@@ -153,14 +147,12 @@ embedding_layer=Embedding(vocab_len, 128,input_length=max_sent_len, mask_zero=Fa
 inp = Input(shape=(max_sent_len,), dtype='int32')
 emb=embedding_layer(inp)
 bi_lstm_word=Bidirectional(LSTM(max_sent_len, return_sequences=True))(emb)
-#bi_lstm_word=LSTM(max_sent_len, return_sequences=True)(emb)
 attention_words=MyAttention(max_sent_len)(bi_lstm_word)
 sentence_encoder=Model(inp,attention_words)
 
 review_inp=Input(shape=(max_review_len, max_sent_len),dtype='int32')
 review_encoder=TimeDistributed(sentence_encoder)(review_inp)
 bi_lstm_sentence=Bidirectional(LSTM(max_review_len, return_sequences=True))(review_encoder)
-#bi_lstm_sentence=LSTM(max_sent_len, return_sequences=True)(review_encoder)
 attention_sentence=MyAttention(max_review_len)(bi_lstm_sentence)
 predictions=Dense(3, activation='softmax')(attention_sentence)
 model=Model(review_inp,predictions)
