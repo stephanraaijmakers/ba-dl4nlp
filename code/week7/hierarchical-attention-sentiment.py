@@ -136,8 +136,8 @@ y=labels
 
 validation_split=0.1
 nb_validation_samples = int(validation_split * data.shape[0])
-X_train = data[:-nb_validation_samples]
-y_train = y[:-nb_validation_samples]
+X_train = data[:nb_validation_samples]
+y_train = y[:nb_validation_samples]
 X_test=data[nb_validation_samples:]
 y_test=y[nb_validation_samples:]
 
