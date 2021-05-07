@@ -7,6 +7,7 @@ if __name__=="__main__":
     print("review,label")
     for line in f:
         line=line.rstrip()
+        line=re.sub("\"","",line)
         m=re.match("^(.+)[\s\t]+\.[\s\t]+([^\s]+).*$",line)
         if m:
             label=m.group(2)
