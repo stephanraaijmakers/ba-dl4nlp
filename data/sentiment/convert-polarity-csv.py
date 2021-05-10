@@ -12,9 +12,9 @@ if __name__=="__main__":
         if m:
             label=m.group(2)
             if label=="0":
-                label="neg"
+                label="obj"
             else:
-                label="pos"
+                label="subj"
             print("\"%s\",%s"%(m.group(1),label))
     f.close()
     
