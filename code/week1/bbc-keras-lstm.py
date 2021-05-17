@@ -41,7 +41,7 @@ def encode_labels(y_train, y_test):
     y_test = to_categorical(y_test, nb_classes)
     return y_train, y_test, nb_classes
 
-def main(fname): # ensure the file is pernuted! 
+def main(fname): # ensure the file is permuted! 
 
     data = pd.read_csv(fname, encoding='ISO-8859-1')
     max_words=1000
@@ -49,8 +49,9 @@ def main(fname): # ensure the file is pernuted!
     x_train, x_test=tokenize_text(x_train,x_test, max_words=max_words)
     y_train, y_test, nb_classes=encode_labels(y_train,y_test)
 
-    x_train = x_train.reshape(len(x_train), max_words, 1)
-    x_test = x_test.reshape(len(x_test), max_words, 1)
+#    x_train = x_train.reshape(len(x_train), max_words, 1)
+#    x_test = x_test.reshape(len(x_test), max_words, 1)
+#    ^^ Use if LSTM is first layer
 
     
     # Model definition
