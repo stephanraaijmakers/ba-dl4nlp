@@ -43,7 +43,7 @@ def load_embedding(tokenizer):
     embedding_dim = 100
     embeddings_index = {}
 
-    embf = open('/home/stephan/DATA/glove.6B.100d.txt')
+    embf = open('glove.6B.100d.txt') # See data in this github
     for line in embf:
         values = line.split()
         word = values[0]
