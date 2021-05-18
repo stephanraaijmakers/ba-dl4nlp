@@ -20,12 +20,12 @@ def split_data(data, train_perc=.08):
     y_test = test['label']
     return x_train, x_test, y_train, y_test
 
-# From words to integers
+# From words to one hot
 def tokenize_text(x_train, x_test, max_words=1000):
     tokenize = keras.preprocessing.text.Tokenizer(num_words=max_words, 
                                               char_level=False)
     tokenize.fit_on_texts(x_train)
-    x_train = tokenize.texts_to_matrix(x_train) # produces a nested array [[doc1=word_id_1,...],[doc2=(etc)]]
+    x_train = tokenize.texts_to_matrix(x_train) # produces a nested array [[doc1=0,...1,...],[doc2=(etc)]]
     x_test = tokenize.texts_to_matrix(x_test)
     return x_train, x_test
 
