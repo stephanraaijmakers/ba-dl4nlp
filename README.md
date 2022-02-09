@@ -1,1 +1,1 @@
-Course material for BA DL4NLP, Leiden 2020-2021
+Course material for BA/BSc DL4NLP, Leiden 2020-2021; 2021-2022
