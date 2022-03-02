@@ -36,7 +36,7 @@ def run_keras_model(model, X_test, y_test):
         print("Loss, accuracy:", results)
         print("Predicting...")
         preds = model.predict_classes(X_test, verbose=0)
-
+        # Tensorflow >2.7: preds = np.argmax(model.predict(X_test),axis=1)
 
 
 def embed_documents(texts):
