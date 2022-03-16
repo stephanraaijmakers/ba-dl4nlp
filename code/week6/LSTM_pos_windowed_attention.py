@@ -128,20 +128,30 @@ model.fit(X_train,to_categorical(y_train),epochs=1,batch_size=64)
 
 #model.evaluate(X_test,to_categorical(y_test))
 
-for x_test in X_test[10:]:
+n=0
+for x_test in X_test[:10]:
         attention_map = get_activations(model, np.array([x_test]), layer_names='attention_weight')
-        print(attention_map)
+        a=attention_map['attention_weight'][0]
+        total=0.0
+        for i in range(len(a)):
+                if i==focus_position-1:
+                        continue
+                total+=a[i]
+        for i in range(len(a)):
+                if i==focus_position-1:
+                        continue
+                a[i]/=total
+        print(a)
+        a=np.array([a])
         xvals=np.arange(len(x_test))
-        words=tuple([int_to_word[w] for w in x_test])
-        plt.xticks(xvals,words)
-        plt.imshow(attention_map['attention_weight'], cmap='hot')
-        #plt.axis('off')
+        words=tuple([int_to_ambig[w] for w in x_test])
+        plt.xticks(xvals,words,rotation='vertical')
+        plt.imshow(a, cmap=cm.afmhot,vmin=0, vmax=1) # cmap='hot')
         plt.title(f'Attention')
-        plt.savefig(f'attention.png')
+        plt.savefig(f'norm-attention-%d.png'%(n))
         plt.close()
-        #predictions=model.predict(np.array([x_test]))
-        print("OK")
-        exit(0)
+        n+=1
+
         
 n=0
 for sentence in X_test:

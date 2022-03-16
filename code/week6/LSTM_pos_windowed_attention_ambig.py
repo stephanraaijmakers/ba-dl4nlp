@@ -169,7 +169,6 @@ for x_test in X_test[:10]:
         plt.savefig(f'norm-attention-%d.png'%(n))
         plt.close()
         n+=1
-exit(0)
         
 n=0
 for sentence in X_test:
