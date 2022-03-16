@@ -1,14 +1,6 @@
 import re
 import sys
 
-# Topic_Id | Topic_Name | Sent_1 | Sent_2 | Label | Sent_1_tag | Sent_2_tag |
-#The "Label" column for *dev/train data * is in a format like "(1, 4)", which means among 5 votes from Amazon Mechanical turkers only 1 is positive and 4 are negative. We would suggest map them to binary labels as follows:
-#paraphrases: (3, 2) (4, 1) (5, 0)
-#non-paraphrases: (1, 4) (0, 5)
-#debatable: (2, 3)  which you may discard if training binary classifier
-# https://github.com/cocoxu/SemEval-PIT2015
-
-
 
 def jaccard_sim(list1, list2):
     s1 = set(list1)
