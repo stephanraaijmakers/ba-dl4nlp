@@ -13,7 +13,7 @@ enter_input_text = globals()
 # set model configuration
 def set_model_config(**kwargs):
   no_words_to_be_predicted = list(kwargs.values())[0] # integer values
-  select_model = list(kwargs.values())[1] # possible values = 'bert' or 'gpt' or 'xlnet'
+  select_model = list(kwargs.values())[1] # possible values = 'bert' or 'gpt'
   enter_input_text = list(kwargs.values())[2] #only string
 
   return no_words_to_be_predicted, select_model, enter_input_text
@@ -29,10 +29,6 @@ def load_model(model_name):
       gpt_tokenizer = AutoTokenizer.from_pretrained("gpt2")
       gpt_model = AutoModelWithLMHead.from_pretrained("gpt2")
       return gpt_tokenizer,gpt_model
-    else:
-      xlnet_tokenizer = AutoTokenizer.from_pretrained("xlnet-base-cased")
-      xlnet_model = AutoModelWithLMHead.from_pretrained("xlnet-base-cased")
-      return xlnet_tokenizer, xlnet_model
   except Exception as e:
     pass
 
@@ -72,16 +68,6 @@ def decode_gpt(tokenizer, input_ids, pred, top_clean):
   resulting_string = tokenizer.decode(generated.tolist()[0])
   return resulting_string
 
-# xlnet encode
-def encode_xlnet(tokenizer, text_sentence):
-  PADDING_TEXT = """animal or thing <eod> </s> <eos>"""
-  input_ids = tokenizer.encode(PADDING_TEXT + text_sentence, add_special_tokens=False, return_tensors="pt")
-  return input_ids
-
-def decode_xlnet(text_sentence, tokenizer, pred, prompt_length):
-  resulting_string = text_sentence + tokenizer.decode(pred[0])[prompt_length:]
-  print(resulting_string)
-
 def get_all_predictions(text_sentence,  model_name, top_clean=5):
   if model_name.lower() == "bert":
     # ========================= BERT =================================
@@ -99,16 +85,6 @@ def get_all_predictions(text_sentence,  model_name, top_clean=5):
     gpt = decode_gpt(gpt_tokenizer, input_ids, predict, top_clean)
     return {'gpt': gpt}
 
-  else:
-    # ========================= XLNet =================================
-    input_ids = encode_xlnet(xlnet_tokenizer, text_sentence)
-    with torch.no_grad():
-      prompt_length = len(xlnet_tokenizer.decode(input_ids[0], skip_special_tokens=True, clean_up_tokenization_spaces=True))
-      print(prompt_length)
-      predict = xlnet_model.generate(input_ids, max_length=prompt_length, do_sample=True, top_p=0.95, top_k=top_clean)
-    xlnet = text_sentence + xlnet_tokenizer.decode(predict[0])[prompt_length:]
-    #xlnet = decode_xlnet(text_sentence, xlnet_tokenizer, predict, prompt_length)
-    return {'xlnet': xlnet}
 
 def get_prediction_end_of_sentence(input_text, model_name):
   try:
