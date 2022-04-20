@@ -45,7 +45,6 @@ while enter_input_text!="#":
       if words[i]=="[MASK]":
         words[i]=unmasking
         break
-    #words[mask_id-1]=unmasking
     enter_input_text=' '.join(words)
   if enter_input_text!="#":
     print("\nUnmasked:", enter_input_text)
