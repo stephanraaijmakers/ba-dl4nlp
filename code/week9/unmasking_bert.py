@@ -4,9 +4,8 @@ from transformers import BertTokenizer, BertForMaskedLM
 
 
 # Guess what's behind the mask
-def unmask_sent(text, top_k=5):
-  tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-  model = BertForMaskedLM.from_pretrained('bert-base-uncased').eval()
+def unmask_sent(text, tokenizer, model, top_k=5):
+
   text = "[CLS] %s [SEP]"%text
   tokenized_text = tokenizer.tokenize(text)
   masked_index = tokenized_text.index("[MASK]")
@@ -24,25 +23,33 @@ def unmask_sent(text, top_k=5):
     if i==0:
       best_guess=predicted_token
     token_weight = top_k_weights[i]
-    #print("[MASK]: '%s'"%predicted_token, " | weights:", float(token_weight))
-  return masked_index, best_guess   
+    print("[MASK]: '%s'"%predicted_token, " | weight:", float(token_weight))
+  return best_guess  # always for the first MASK
   
 
 
-user_input="go"
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+model = BertForMaskedLM.from_pretrained('bert-base-uncased').eval()
 
-while user_input!="stop":
-  print("#################### Unmasking with BERT #################\n")
-  enter_input_text=input('Enter a sentence, use [MASK] for masking words: ').rstrip()
+enter_input_text=""
+
+while enter_input_text!="#":
+  print("\n#################### Unmasking with BERT #################\n")
+  enter_input_text=input('Enter a sentence, use [MASK] for masking words (type # to stop): ').rstrip()
   if enter_input_text.split(" ")[-1]=="[MASK]":
     enter_input_text+=" [MASK]" # preventing punctuation predictions for final mask
   while "[MASK]" in enter_input_text:
-    mask_id, unmasking=unmask_sent(enter_input_text)
+    unmasking=unmask_sent(enter_input_text, tokenizer, model)
     words=enter_input_text.split(" ")
-    words[mask_id-1]=unmasking
+    for i in range(len(words)):
+      if words[i]=="[MASK]":
+        words[i]=unmasking
+        break
+    #words[mask_id-1]=unmasking
     enter_input_text=' '.join(words)
-  print("Unmasked:", enter_input_text)
-  user_input=input("Proceed? (stop/go) ")
+  if enter_input_text!="#":
+    print("\nUnmasked:", enter_input_text)
+
 
 
 
