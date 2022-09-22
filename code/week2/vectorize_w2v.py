@@ -59,12 +59,12 @@ y=df['label']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1,random_state = 3, stratify=y)
 
 # TD.IDF
-count_vect = CountVectorizer()
-tfidf_transformer = TfidfTransformer()    
-X_train_counts = count_vect.fit_transform(X_train)
-X_train_vectors = tfidf_transformer.fit_transform(X_train_counts)    
-X_test_counts = count_vect.transform(X_test)
-X_test_vectors = tfidf_transformer.transform(X_test_counts)
+#count_vect = CountVectorizer()
+#tfidf_transformer = TfidfTransformer()    
+#X_train_counts = count_vect.fit_transform(X_train)
+#X_train_vectors = tfidf_transformer.fit_transform(X_train_counts)    
+#X_test_counts = count_vect.transform(X_test)
+#X_test_vectors = tfidf_transformer.transform(X_test_counts)
 
     
 # Word2vec: choose a model option (see above)
