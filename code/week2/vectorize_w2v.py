@@ -58,7 +58,7 @@ y=df['label']
 # Split data into training, test, and training/test labels. Test=10% of all data.
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1,random_state = 3, stratify=y)
 
-# TD.IDF
+# TF.IDF
 #count_vect = CountVectorizer()
 #tfidf_transformer = TfidfTransformer()    
 #X_train_counts = count_vect.fit_transform(X_train)
