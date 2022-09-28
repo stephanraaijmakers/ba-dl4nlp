@@ -58,7 +58,7 @@ def run_keras_model(model, X_test, y_test):
         print("Loss, accuracy:", results)
         print("Predicting...")
         preds = model.predict_classes(X_test, verbose=0)
-
+        # analyze preds...
 
 # =====================================
 
@@ -77,7 +77,7 @@ def build_d2v_model(dimension):
     documents = [TaggedDocument(doc, [i]) for i, doc in enumerate(texts)]
     print("Building doc2vec model....")
     model = Doc2Vec(documents, vector_size=dimension, window=2, min_count=1, workers=4)
-    return (documents, model)
+    return model
     
 
 def test_d2v_model(model, documents, str):
@@ -86,7 +86,7 @@ def test_d2v_model(model, documents, str):
         for (doc_id, value) in sims:
             print(' '.join(documents[doc_id].words))
                     
-def doc2vec_transformer(texts, d2v_model, dimension=100):
+def doc2vec_transformer(texts, d2v_model):
         vectors=[]
         for text in texts:                
            tokens=text.split(" ")
@@ -98,7 +98,7 @@ def doc2vec_transformer(texts, d2v_model, dimension=100):
 # Delete if  __name__ etc. when working in Colab
 if __name__=="__main__":
    dimension=25
-   (docs, model)=build_d2v_model(dimension)
+   d2v_model=build_d2v_model(dimension)
    df=pd.read_csv("bbc-all.csv",encoding= 'ISO-8859-1') # try encoding = 'utf-8'; encoding = 'ISO-8859-1' for unicode errors
 
    X=df['news_item']
@@ -111,8 +111,8 @@ if __name__=="__main__":
    y_train = label_encoder.fit_transform(y_train)
    y_test=label_encoder.transform(y_test)
 
-   X_train_vectors=doc2vec_transformer(X_train,model,dimension)
-   X_test_vectors=doc2vec_transformer(X_test,model,dimension)
+   X_train_vectors=doc2vec_transformer(X_train, d2v_model)
+   X_test_vectors=doc2vec_transformer(X_test, d2v_model)
 
 #   X_train_vectors, X_test_vectors=scale_data(X_train_vectors, X_test_vectors)
    
