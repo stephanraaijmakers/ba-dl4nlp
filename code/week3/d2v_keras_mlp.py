@@ -57,7 +57,7 @@ def run_keras_model(model, X_test, y_test):
         results = model.evaluate(X_test, y_test, batch_size=64)
         print("Loss, accuracy:", results)
         print("Predicting...")
-        preds = model.predict_classes(X_test, verbose=0)
+        preds = model.predict(X_test, verbose=0)
         # analyze preds...
 
 # =====================================
@@ -90,7 +90,7 @@ def doc2vec_transformer(texts, d2v_model):
         vectors=[]
         for text in texts:                
            tokens=text.split(" ")
-           vector=model.infer_vector(tokens)
+           vector=d2v_model.infer_vector(tokens)
            vectors.append(np.array(vector))
         return np.array(vectors)
 
