@@ -8,6 +8,11 @@ from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.layers import TextVectorization
 
+print("####################################################################################")
+print("Do pip install tensorflow==\"2.9.2\" first! Set epoch=... below to a higher number.")
+print("####################################################################################")
+      
+
 """
 ## Downloading the data
 
@@ -329,11 +334,11 @@ transformer = keras.Model(
 We'll use accuracy as a quick way to monitor training progress on the validation data.
 Note that machine translation typically uses BLEU scores as well as other metrics, rather than accuracy.
 
-Here we only train for 1 epoch, but to get the model to actually converge
+Here we only train for 10 epochs, but to get the model to actually converge
 you should train for at least 30 epochs.
 """
 
-epochs = 1  # This should be at least 30 for convergence
+epochs = 10  # This should be at least 30 for convergence
 
 transformer.summary()
 transformer.compile(
@@ -375,6 +380,7 @@ test_eng_texts = [pair[0] for pair in test_pairs]
 for _ in range(30):
     input_sentence = random.choice(test_eng_texts)
     translated = decode_sequence(input_sentence)
+    print("%s\t%s"%(input_sentence, translated))
 
 """
 After 30 epochs, we get results such as:
