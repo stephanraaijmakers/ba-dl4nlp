@@ -33,8 +33,9 @@ def word2vec_transformer(texts, w2v_model, dimension=100):
            words=text.split(" ")
            vector=[]
            for word in words[:50]:
-                   if word in w2v_model.wv:
-                         vector.extend(np.array(w2v_model.wv[word]))
+                   if word in w2v_model: #.wv:
+                         #vector.extend(np.array(w2v_model.wv[word])) NEW VERSION gensim
+                         vector.extend(np.array(w2v_model[word]))
                    else:
                          vector.extend(np.zeros(dimension))
            vectors.append(vector)
