@@ -49,7 +49,7 @@ def embed_documents(texts):
         max_len=0
         for doc in texts:
                 embedded_docs.append(one_hot(doc,vocab_len))
-                l=len(doc)
+                l=len(doc.split(" ")
                 if l>max_len:
                         max_len=l
         # Padding
