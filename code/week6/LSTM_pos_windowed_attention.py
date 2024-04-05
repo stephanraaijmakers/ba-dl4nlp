@@ -130,8 +130,8 @@ model.fit(X_train,to_categorical(y_train),epochs=1,batch_size=64)
 
 n=0
 for x_test in X_test[:10]:
-        attention_map = get_activations(model, np.array([x_test]), layer_names='attention_weight')
-        a=attention_map['attention_weight'][0]
+        attention_map = get_activations(model, np.array([x_test]), layer_names='attention')
+        a=attention_map['attention'][0]
         total=0.0
         for i in range(len(a)):
                 if i==focus_position-1:
