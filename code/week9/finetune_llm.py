@@ -24,7 +24,12 @@ def clean_memory():
 
 
 def finetune():
-    model_name = "NousResearch/Llama-2-7b-chat-hf"
+    #model_name = "NousResearch/Llama-2-7b-chat-hf"
+    #model_name = "NousResearch/Llama-2-7b-chat-hf"
+    #model_name="Maykeye/TinyLLama-v0"
+    #model_name="keeeeenw/MicroLlama"
+    model_name="vikash06/llama-2-7b-small-model-new"
+    #model_name="TinyLlama/TinyLlama-1.1B-Chat-v0.6"
    # model_name="Maykeye/TinyLLama-v0"
     dataset_name = "prompts.txt"
     #"mlabonne/guanaco-llama2-1k"
@@ -162,8 +167,19 @@ def finetune():
     logging.set_verbosity(logging.CRITICAL)
 
     # Text generation
+    
+    print("Base model")
+    print("#"x80)
     prompt = "What is Chomskyan linguistics?"
     pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=500)
+    result = pipe(f"<s>[INST] {prompt} [/INST]")
+    print(result[0]['generated_text'])
+
+    # Text generation
+    print("Fine-tuned model")
+    print("#"x80)
+    prompt = "What is Chomskyan linguistics?"
+    pipe = pipeline(task="text-generation", model=new_model, tokenizer=tokenizer, max_length=500)
     result = pipe(f"<s>[INST] {prompt} [/INST]")
     print(result[0]['generated_text'])
 
