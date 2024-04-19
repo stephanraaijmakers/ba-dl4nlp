@@ -29,7 +29,6 @@ def finetune():
     #model_name="keeeeenw/MicroLlama"
     model_name="vikash06/llama-2-7b-small-model-new"
     #model_name="TinyLlama/TinyLlama-1.1B-Chat-v0.6"
-   # model_name="Maykeye/TinyLLama-v0"
     dataset_name = "prompts.txt"
     #"mlabonne/guanaco-llama2-1k"
 
