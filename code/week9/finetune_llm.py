@@ -25,7 +25,6 @@ def clean_memory():
 
 def finetune():
     #model_name = "NousResearch/Llama-2-7b-chat-hf"
-    #model_name = "NousResearch/Llama-2-7b-chat-hf"
     #model_name="Maykeye/TinyLLama-v0"
     #model_name="keeeeenw/MicroLlama"
     model_name="vikash06/llama-2-7b-small-model-new"
