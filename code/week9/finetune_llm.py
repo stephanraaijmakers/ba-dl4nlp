@@ -165,34 +165,40 @@ def finetune():
     logging.set_verbosity(logging.CRITICAL)
 
     # Text generation
-    
-    print("Base model")
-    print("#"x80)
-    prompt = "What is Chomskyan linguistics?"
+    print("#"*80)
+    print("Old model:")
+    prompt = "How to own a plane?"
     pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=500)
     result = pipe(f"<s>[INST] {prompt} [/INST]")
     print(result[0]['generated_text'])
 
-    # Text generation
-    print("Fine-tuned model")
-    print("#"x80)
-    prompt = "What is Chomskyan linguistics?"
-    pipe = pipeline(task="text-generation", model=new_model, tokenizer=tokenizer, max_length=500)
-    result = pipe(f"<s>[INST] {prompt} [/INST]")
-    print(result[0]['generated_text'])
+    del model
+    del pipe
+    del trainer
+    gc.collect()
+    gc.collect()
 
     #clean_memory()
 
     # Reload model in FP16 and merge it with LoRA weights
-    #base_model = AutoModelForCausalLM.from_pretrained(
-    #  model_name,
-    #    low_cpu_mem_usage=True,
-    #    return_dict=True,
-    #    torch_dtype=torch.float16,
-    #    device_map=device_map,
-    #)
-    #model = PeftModel.from_pretrained(base_model, new_model)
-    #model = model.merge_and_unload()
+    base_model = AutoModelForCausalLM.from_pretrained(
+      model_name,
+        low_cpu_mem_usage=True,
+        return_dict=True,
+        torch_dtype=torch.float16,
+        device_map=device_map,
+    )
+    model = PeftModel.from_pretrained(base_model, new_model)
+    model = model.merge_and_unload()
+
+    print("#"*80)
+    print("New model:")
+    prompt = "How to own a plane?"
+    pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=500)
+    result = pipe(f"<s>[INST] {prompt} [/INST]")
+    print(result[0]['generated_text'])
+
+
     # Reload tokenizer to save it
     #tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
     #tokenizer.pad_token = tokenizer.eos_token
