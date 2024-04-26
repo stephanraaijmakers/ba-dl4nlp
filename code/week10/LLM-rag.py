@@ -24,6 +24,7 @@ from langchain_core.prompts import ChatPromptTemplate
 
 # OR USE (preferred, use key symbol in Colab):
 #os.environ["OPENAI_API_KEY"] = userdata.get('OPENAI_API_KEY')
+os.environ["HUGGINGFACEHUB_API_TOKEN"] = ""
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
 # For Dutch LLMs, see https://huggingface.co/spaces/BramVanroy/open_dutch_llm_leaderboard
