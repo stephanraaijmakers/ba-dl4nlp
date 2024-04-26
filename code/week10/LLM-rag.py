@@ -20,9 +20,10 @@ from langchain_core.prompts import ChatPromptTemplate
 # If you use COLAB: put your Hggingface/OpenAI keys in keys.env, or upload them in COLAB through the "key" icon.
 # Otherwise put them in the code (be careful).
 # Replace <keys.env> with your keys.env below:
-dotenv.load_dotenv('<keys.env>')
+# dotenv.load_dotenv('<keys.env>')
 
-##os.environ["OPENAI_API_KEY"] = userdata.get('OPENAI_API_KEY')
+# OR USE (preferred, use key symbol in Colab):
+#os.environ["OPENAI_API_KEY"] = userdata.get('OPENAI_API_KEY')
 #os.environ["HUGGINGFACEHUB_API_TOKEN"] = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
 # For Dutch LLMs, see https://huggingface.co/spaces/BramVanroy/open_dutch_llm_leaderboard
@@ -133,7 +134,6 @@ chain = (
 # Replace <question> with your question below:
 print(chain.invoke({"question": "<question>", "language": "dutch"}))
 
-print(chain.invoke({"question": "<question>", "language": "dutch"}))
 
 
 
