@@ -178,6 +178,78 @@ print("The solution is: ",summarizedResponse.json()['choices'][0]['message']['co
 
 
     
-        
+# NER - first call
+api_request_json_ner = {
+    #"model": "llama-7b-chat",
+    "model": "mixtral-8x22b-instruct",
+    "messages": [
+        {"role": "user", "content": "Find the named entities in the following sentence: Mary hit John."},
+    ],
+    "functions": [
+        {
+            "name": "get_entities",
+            "description": "Find named entities ",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "sentence": {
+                        "type": "string",
+                        "description": "A sentence",
+                    },
+                },
+            },
+            "required": ["sentence"],
+        }
+    ]
+}
+
+response = llama.run(api_request_json_ner)
+output = response.json()['choices'][0]['message']
+#output["content"]="Solve the Game24 puzzle for these numbers: 10 12 3 8"
+print(output)
+
+# Second call
+
+response = llama.run(api_request_json_ner)
+output = response.json()['choices'][0]['message']
+solution=get_entities("Mary hit John") # extract from output first API call
+print(solution)
+
+second_api_request_json_ner = {
+    "model": "llama-13b-chat",
+    #"model": "mixtral-8x22b-instruct",
+    #"model": "falcon-7b-instruct",
+    "messages": [
+      {"role": "user", "content":"Find the named entities in this sentence: Mary hit John."},
+      {"role": "function", "name": output['function_call']['name'], "content": solution}
+    ],
+    "functions": [
+        {
+            "name": "get_entities",
+            "description": "Find named entities",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "sentence": {
+                        "type": "string",
+                        "description": "A sentence",
+                    },
+                },
+            },
+            "required": ["sentence"],
+        }
+    ],
+    
+  }
+
+second_request = llama.run(second_api_request_json_ner)
+summarizedResponse = llama.run(second_api_request_json_ner)
+print(summarizedResponse.json())
+print("The solution is: ",summarizedResponse.json()['choices'][0]['message']['content'])
+
+
+
+
+
         
     
