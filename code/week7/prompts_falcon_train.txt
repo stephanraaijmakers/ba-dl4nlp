@@ -1,0 +1,3 @@
+Assign part of speech tags to the words in the text.  
+Text: This movie is great. 
+Parts of speech: This (article) movie (noun) is (verb) great (adverb)

@@ -1,0 +1,5 @@
+Text: I do not like this pizza, it is too salty.
+Parts of speech:
+
+Text: I really like this pizza, it is not too salty.
+Parts of speech:
