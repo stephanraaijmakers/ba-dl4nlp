@@ -17,7 +17,7 @@ from langchain_core.prompts import ChatPromptTemplate
 #from chromadb.utils import embedding_functions
 
 
-# If you use COLAB: put your Hggingface/OpenAI keys in keys.env, or upload them in COLAB through the "key" icon.
+# If you use COLAB: put your Huggingface/OpenAI keys in keys.env, or upload them in COLAB through the "key" icon.
 # Otherwise put them in the code (be careful).
 # Replace <keys.env> with your keys.env below:
 # dotenv.load_dotenv('<keys.env>')
