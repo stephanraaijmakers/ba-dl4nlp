@@ -16,6 +16,7 @@ nlp = spacy.load("en_core_web_sm")
 # It is free with a credit of $5 and price/token is very low.
 # Experiment with a few of their models (keep an eye on your Usage).
 
+LLAMAAPI_KEY=""
 llama = LlamaAPI(LLAMAAPI_KEY) # bad practice, delete key from your code after testing
 
 # After trying out the Game24 example: can you implement this function? It extracts entities with labels from a string.
@@ -136,7 +137,8 @@ second_api_request_json = {
     "model": "mixtral-8x22b-instruct",
     "messages": [
       {"role": "user", "content":"Solve the Game24 puzzle for these numbers: 10 12 3 8"},
-      {"role": "function", "name": output['function_call']['name'], "content": solution}
+      #{"role": "function", "name": output['function_call']['name'], "content": solution}
+      #{"role": "function", "name": "game24", "content": solution}
     ],
     "functions": [
         {
